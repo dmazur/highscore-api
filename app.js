@@ -27,9 +27,15 @@ const adapter = new FileAsync('db.json');
         .take(10)
         .value();
 
+      const topScoresTokenized = [];
+      for (const score of topScores) {
+        topScoresTokenized.push(score.name);
+        topScoresTokenized.push(score.score);
+      }
+
       res.statusCode = 200;
-      res.setHeader('Content-Type', 'text/json');
-      res.end(JSON.stringify(topScores));
+      res.setHeader('Content-Type', 'text/plain');
+      res.end(topScoresTokenized.join('|'));
     } else if (req.method === 'POST') {
       let body = '';
 
