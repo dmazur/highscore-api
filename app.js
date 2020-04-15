@@ -54,6 +54,12 @@ const adapter = new FileAsync('db.json');
           res.end('Missing data');
         }
 
+        if (process.env.SECURITY_TOKEN && process.env.SECURITY_TOKEN !== postData.token) {
+          res.statusCode = 403;
+          res.setHeader('Content-Type', 'text/plain');
+          res.end('Access denied');
+        }
+
         db.get('scores')
           .push({
             name,
